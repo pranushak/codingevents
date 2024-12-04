@@ -5,7 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Coding Events</h1>
-<nav th:replace="fragments :: navigation"></nav>
+<nav th:fragment="navigation">
+    <ul>
+        <a href="/events">All Events</a>
+        <a href="/events/create">Create Event</a>
+    </ul>
+</nav>
 </body>
 </html>
