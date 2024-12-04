@@ -21,4 +21,10 @@ public class EventController {
         model.addAttribute("events", events);
         return "events/index";
     }
+
+    @GetMapping("create")
+    public String renderCreateEvent(){
+        return "events/create";
+    }
+
 }
