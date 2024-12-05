@@ -9,10 +9,14 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Description</th>
+            <th>Address</th>
         </tr>
     </thead>
-    <tr th:each="event : ${events}">
-        <td th:text="${event}"></td>
+    <tr>
+        <th:block th:each="key : ${events.keySet()}">
+            <td th:text="${events.get(key)}"></td>
+        </th:block>
     </tr>
 </table>
 </body>
