@@ -2,6 +2,7 @@ package org.launchcode.codingevents.models;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
@@ -22,12 +23,19 @@ public class Event {
     @Email(message="Invalid Email, Try again!")
     private String contactEmail;
 
-    public Event(String name, String description, String contactEmail) {
+    @NotBlank(message = "Location cannot be blank!")
+    private String location;
+
+    @Positive(message = "Number of attendees must be one or more.")
+    private int numberOfAttendies;
+
+    public Event(String name, String description, String contactEmail, String location, int numberOfAttendies) {
         this();
         this.name = name;
         this.description = description;
-        this.contactEmail =contactEmail;
-
+        this.contactEmail = contactEmail;
+        this.location = location;
+        this.numberOfAttendies = numberOfAttendies;
     }
     public Event(){
         this.id = nextId;
@@ -60,6 +68,23 @@ public class Event {
 
     public int getId() {
         return id;
+    }
+
+    public @NotBlank(message = "Location cannot be blank!") String getLocation() {
+        return location;
+    }
+
+    public void setLocation(@NotBlank(message = "Location cannot be blank!") String location) {
+        this.location = location;
+    }
+
+    @Positive(message = "Number of attendees must be one or more.")
+    public int getNumberOfAttendies() {
+        return numberOfAttendies;
+    }
+
+    public void setNumberOfAttendies(@Positive(message = "Number of attendees must be one or more.") int numberOfAttendies) {
+        this.numberOfAttendies = numberOfAttendies;
     }
 
     @Override
