@@ -2,8 +2,10 @@ package org.launchcode.codingevents.controllers;
 
 import jakarta.validation.Valid;
 import org.launchcode.codingevents.data.EventData;
+import org.launchcode.codingevents.data.EventRepository;
 import org.launchcode.codingevents.models.Event;
 import org.launchcode.codingevents.models.EventType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,9 +18,12 @@ import java.util.List;
 @RequestMapping("events")
 public class EventController {
 
+    @Autowired
+    private EventRepository eventRepository;
+
     @GetMapping
     public String displayAllEvents(Model model){
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/index";
     }
 
@@ -38,14 +43,15 @@ public class EventController {
             model.addAttribute("title", "Create Event");
             return "events/create";
         }
-        EventData.add(newEvent);
+        //EventData.add(newEvent);
+        eventRepository.save(newEvent);
         return "redirect:/events";
     }
 
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model){
         model.addAttribute("title","Delete Events");
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/delete";
     }
 
@@ -54,7 +60,7 @@ public class EventController {
 
         if (eventIds != null) {
             for (int id : eventIds) {
-                EventData.remove(id);
+               eventRepository.deleteById(id);
             }
         }
             return "redirect:/events";
