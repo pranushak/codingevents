@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.engine.internal.Cascade;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +27,9 @@ public class Event extends AbstractEntity{
     @Valid
     @NotNull
     private EventDetails eventDetails;
+
+    @ManyToMany
+    private List<Tag> tags = new ArrayList<>();
 
     public Event(String name, EventCategory eventCategory) {
         this.name = name;
@@ -51,6 +56,14 @@ public class Event extends AbstractEntity{
 
     public @Valid EventDetails getEventDetails() {
         return eventDetails;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void addTags(Tag tag) {
+        this.tags.add(tag);
     }
 
     public void setEventDetails(@Valid EventDetails eventDetails) {
